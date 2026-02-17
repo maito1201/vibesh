@@ -1,0 +1,54 @@
+# Example configuration for vibesh
+#
+# This file demonstrates a safe configuration that blocks commands
+# which could be dangerous if an MCP (Model Context Protocol) server
+# were compromised or malicious.
+#
+# Copy this file to ~/.vibeshrc and adjust according to your needs:
+#   cp .vibeshrc.example ~/.vibeshrc
+#
+# See README.md for more details on configuration options.
+
+# Backend shell (required)
+shell = bash
+
+# File Deletion Commands
+# Block commands that could destroy data
+forbidden = rm
+forbidden = rmdir
+
+# File Move/Overwrite Commands
+# Block commands that could overwrite critical files
+forbidden = mv
+
+# Permission/Privilege Escalation
+# Block commands that could change permissions or escalate privileges
+forbidden = /^sudo.*/
+forbidden = chmod
+forbidden = chown
+
+# System Control Commands
+# Block commands that could disrupt system operation
+forbidden = reboot
+forbidden = shutdown
+forbidden = kill
+
+# Network Commands
+# Block commands that could exfiltrate data or establish C&C channels
+forbidden = /^curl\s+.*/
+forbidden = /^wget\s+.*/
+forbidden = nc
+
+# Dangerous Git Operations
+# Block git commands with force flags (using regexp function syntax)
+forbidden = regexp('git.*--force')
+
+# Process Control
+# Block commands that could interfere with running processes
+forbidden = pkill
+forbidden = killall
+
+# Disk Operations
+# Block commands that could corrupt filesystems
+forbidden = mkfs
+forbidden = dd
